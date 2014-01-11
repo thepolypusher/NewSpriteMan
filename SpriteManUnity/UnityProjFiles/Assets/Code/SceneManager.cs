@@ -7,8 +7,9 @@ namespace Assets.Code
     {
         public LootManager lootMan;
         public List<ChestSpawner> sceneChests = new List<ChestSpawner>();
+        public List<MonsterSpawner> sceneMonsterSpawners = new List<MonsterSpawner>();
 
-        public void LateUpdate()
+        public void Awake()
         {
             foreach (ChestSpawner spawner in sceneChests)
             {
@@ -20,7 +21,10 @@ namespace Assets.Code
             }
         }
 
-
+        public void SpawnMonster(MonsterSpawner spawner, Monster monster)
+        {
+            spawner.SpawnMonster(monster);
+        }
 
     }
 }

@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Item : MonoBehaviour {
+public class Item : MonoBehaviour
+{
+    public string itemName;
 
-	// Use this for initialization
-	void Start () {
-	//test edit for git
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public void Init(string name)
+    {
+        itemName = name;
+    }
+
 }

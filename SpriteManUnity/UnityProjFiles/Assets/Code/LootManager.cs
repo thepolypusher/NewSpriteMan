@@ -21,23 +21,31 @@ namespace Assets.Code
 
         private void Start()
         {
-            //ConstructChest();
+        }
+
+        public void Update()
+        {
         }
 
         public Chest ConstructChest(ChestSpawner spawner)
         {
             string newChestSize = ChestSize();
-            Debug.Log(newChestSize);
             string newChestRarity = ChestRarity(newChestSize);
-            Debug.Log(newChestRarity);
             int newChestSlots = GetChestSlots(newChestSize);
-            Debug.Log(newChestSlots + " slots");
             bool isIdentified = ChestIsIdentified();
-            Debug.Log("Identified?: " + isIdentified);
             var newChest = Instantiate(chestPrefab, spawner.transform.position, spawner.transform.rotation) as Chest;
-            newChest.Init(newChestSize, newChestRarity, isIdentified);
+            newChest.Init(newChestSize, newChestRarity, isIdentified, spawner);
             FillChest(lootTable, newChest, newChestSlots, newChestRarity);
             return newChest;
+        }
+
+        public Item LootDrop()
+        {
+            Item newItem;
+            int rarity = GetRarity(raritythresh);
+            string raritystring = DropRarity(rarity);
+            newItem = lootTable.GetItem(raritystring);
+            return newItem;
         }
 
         private string ChestSize()
@@ -69,11 +77,35 @@ namespace Assets.Code
                 if (y >= raritythresh)
                     x += 1;
             }
+            if (x > 5)
+                x = 5;
             return x;
+        }
+
+        private string DropRarity(int rarity)
+        {
+            string newrarity;
+            switch (rarity)
+            {
+                case 1: newrarity = "junk";
+                    break;
+                case 2: newrarity = "common";
+                    break;
+                case 3: newrarity = "uncommon";
+                    break;
+                case 4: newrarity = "rare";
+                    break;
+                case 5: newrarity = "legendary";
+                    break;
+                default: throw new ArgumentException("X is greater than 5");
+            }
+            return newrarity;
         }
 
         private string ChestRarity(string chestsize)
         {
+            //some code smell on this. Break into 2 methods, slots and rarity?
+            //could argue there's not a great reason to separate the two.
             string chestrarity;
             int x = GetRarity(raritythresh);
 
@@ -128,7 +160,6 @@ namespace Assets.Code
             {
                 Item newItem;
                 newItem = lootTable.GetItem(rarity);
-                Debug.Log(newItem);
                 newchest.AddItem(newItem);
             }
         }
@@ -137,11 +168,11 @@ namespace Assets.Code
         {
             bool id;
             int x = GetRarity(raritythresh);
-            if (x <= 4)
-                id = true;
-            else
+            if (x <= 3)
                 id = false;
+            else
+                id = true;
             return id;
-        }
+        } 
     }
 }

@@ -5,7 +5,7 @@ namespace Assets.Code
 {
     public class LootTable : MonoBehaviour
     {
-        public Item resourceStub;
+        public Item resourceStub; // just some debug items to work with the loot tables
         public Item gunStub;
         public Item keyStub;
 
@@ -26,14 +26,6 @@ namespace Assets.Code
         }
 
         // Gets an item from a table
-        private Item GetItemFromTable(List<Item> table)
-        {
-            Item newItem;
-            int x = UnityEngine.Random.Range(0,table.Count);
-            newItem = table[x];
-            Debug.Log(newItem + " pulled from " + table);
-            return newItem;
-        }
 
         public Item GetItem(string rarity)
         {
@@ -56,6 +48,15 @@ namespace Assets.Code
             }
             return newItem;
         }
+
+        private Item GetItemFromTable(List<Item> table)
+        {
+            Item newItem;
+            int x = UnityEngine.Random.Range(0, table.Count);
+            newItem = table[x];
+            return newItem;
+        }
+
 
         
     }

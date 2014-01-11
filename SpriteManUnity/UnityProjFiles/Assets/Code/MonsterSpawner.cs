@@ -5,8 +5,9 @@ namespace Assets.Code
 {
     public class MonsterSpawner : MonoBehaviour
     {
-        public bool is_guarded = false;
         public ArrayList flags;
+        private bool _isActive = false;
+        private bool _hasMonster = false;
 
         public void Awake()
         {
@@ -15,9 +16,13 @@ namespace Assets.Code
             //add self to chest list in scene
         }
 
-        private void SpawnMonster(Monster newmonster)
+        public void SpawnMonster(Monster newmonster)
         {
-            newmonster = Instantiate(newmonster, transform.position, transform.rotation) as Monster;
+            if (_isActive)
+            {
+                newmonster = Instantiate(newmonster, transform.position, transform.rotation) as Monster;
+                _hasMonster = true;
+            }
         }
     }
 }
