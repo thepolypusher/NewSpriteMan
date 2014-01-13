@@ -13,6 +13,7 @@ namespace Assets.Code
         public MasterManager Master;
         public Chest chestPrefab;
         public LootTable lootTable;
+        public Player _player;
         //public List<Chest> sceneChests = new List<Chest>();
 
         private int raritythresh = 8; // Increasing this value makes all loot more rare. 7= about 70% junk
@@ -39,9 +40,9 @@ namespace Assets.Code
             return newChest;
         }
 
-        public Item LootDrop()
+        public Item ItemLootDrop()
         {
-            Item newItem;
+            Item newItem;// need to add a way to not drop anything (shouldnt be 100% to get items)
             int rarity = GetRarity(raritythresh);
             string raritystring = DropRarity(rarity);
             newItem = lootTable.GetItem(raritystring);
@@ -52,7 +53,7 @@ namespace Assets.Code
         {
             //1-5 medium size. 6-8 large/small. 9-10 huge/tiny
             int size = UnityEngine.Random.Range(1, 11);
-            int coin = UnityEngine.Random.Range(0,2);
+            int coin = UnityEngine.Random.Range(0, 2);
             if (size <= 5)
                 return "medium";
             else if (size <= 8)
@@ -66,7 +67,7 @@ namespace Assets.Code
                 else
                     return "huge";
         }
-        
+   
         private int GetRarity(int raritythresh)
         {
             int y = raritythresh;

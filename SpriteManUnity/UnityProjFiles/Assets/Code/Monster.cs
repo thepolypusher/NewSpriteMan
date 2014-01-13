@@ -8,13 +8,15 @@ namespace Assets.Code
 {
     public class Monster : MonoBehaviour
     {
-        private string 
-            _name,
-            _type;
-        private int
+        public string 
+            name,
+            type;
+        private int //derived
             _health,
-            _speed,
-            _level,
+            _speed;
+
+
+        private int level,
             _xp;
 
         private Monster _leader;
@@ -22,13 +24,22 @@ namespace Assets.Code
         private bool _isActive;
         private bool _isLeader;
 
-        public void Init(string name, string type, int health, int speed, int level, int xp)
+        public void Start()
         {
-            _name = name;
-            _type = type;
-            _health = health;
-            _speed = speed;
-            _level = level;
+            MonsterBalancer(level, type, _isLeader);
+        }
+
+        private void MonsterBalancer(int level, string type, bool isLeader) // takes all the initial values and derives health etc
+        {
+
+        }
+
+        public void Init(int monsterlevel, bool isLeader)
+        {
+            if (isLeader)
+                MakeLeader();
+
+            level = monsterlevel;
         }
 
         public void MakeLeader()

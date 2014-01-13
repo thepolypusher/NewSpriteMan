@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Assets.Code
 {
-    class Scene : MonoBehaviour
+    public class Scene : MonoBehaviour
     {
     }
 }
