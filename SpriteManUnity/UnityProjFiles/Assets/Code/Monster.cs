@@ -48,6 +48,11 @@ namespace Assets.Code
             _isLeader = true;
         }
 
+        public void SubtractHealth(int amount)
+        {
+            _health -= amount;
+        }
+
 
     }
 }

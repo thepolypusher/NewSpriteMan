@@ -54,7 +54,9 @@ namespace Assets.Code
                 return;
             if (other.tag == "Enemy")
             {
-                //do damage
+                var newMonster = other.transform.parent.gameObject;
+               // Monster monster = newMonster;
+
                 Destroy(gameObject);
             }
             else

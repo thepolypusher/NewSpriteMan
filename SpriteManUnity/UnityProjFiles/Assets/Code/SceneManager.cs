@@ -1,36 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Assets.Code
 {
     public class SceneManager : MonoBehaviour
     {
-        public LootManager lootMan;
-        public Monster debugMonster;
-        public List<ChestSpawner> sceneChests = new List<ChestSpawner>();
-        public List<MonsterSpawner> sceneMonsterSpawners = new List<MonsterSpawner>();
-        public Scene activeScene;
-        
-        
+        public LootManager LootMan;
+        public Monster DebugMonster;
+        public List<ChestSpawner> SceneChests = new List<ChestSpawner>();
+        public List<MonsterSpawner> SceneMonsterSpawners = new List<MonsterSpawner>();
+        public Scene ActiveScene;
         
 
         public void Awake()
         {
-            foreach (ChestSpawner spawner in sceneChests)
+            MonsterSpawner[] ts = gameObject.GetComponentsInChildren<MonsterSpawner>();
+            foreach (MonsterSpawner spawner in ts)
             {
-                if (!spawner.hasChest)
+                SceneMonsterSpawners.Add(spawner);
+            }
+
+
+            foreach (MonsterSpawner spawner in SceneMonsterSpawners)
+            {
+                spawner.SpawnMonster(DebugMonster);
+            }
+
+            ChestSpawner[] cs = gameObject.GetComponentsInChildren<ChestSpawner>();
+            foreach (ChestSpawner chestspawner in cs)
+            {
+                SceneChests.Add(chestspawner);
+            }
+
+            foreach (ChestSpawner newchestspawner in SceneChests)
+            {
+                if (!newchestspawner.hasChest)
                 {
-                    var newChest = lootMan.ConstructChest(spawner);
-                    spawner.Init(newChest);
+                    var newChest = LootMan.ConstructChest(newchestspawner);
+                    newchestspawner.Init(newChest);
                 }
             }
 
-            //debug monster spawner, just puts a bunch of dummies in the scene
-            foreach (MonsterSpawner spawner in sceneMonsterSpawners)
-            {
-                SpawnMonster(spawner, debugMonster);
-            }
         }
 
         public void SpawnMonster(MonsterSpawner spawner, Monster monster)

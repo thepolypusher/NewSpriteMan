@@ -11,7 +11,7 @@ namespace Assets.Code
             public List<Item> goods;
 
             private string chestsize;
-            private string rarity;
+            public string rarity;
             private bool locked = true;
             private bool IDed;
             private ChestSpawner mySpawner;
@@ -19,6 +19,16 @@ namespace Assets.Code
 
             public void Start()
             {
+                if (chestsize == "huge")
+                    gameObject.transform.localScale = new Vector3(4f,4f, 1);
+                if (chestsize == "large")
+                    gameObject.transform.localScale = new Vector3(3f, 3f, 1);
+                if (chestsize == "medium")
+                    gameObject.transform.localScale = new Vector3(2f, 2f, 1);
+                if (chestsize == "small")
+                    gameObject.transform.localScale = new Vector3(1f, 1f, 1);
+                if (chestsize == "tiny")
+                    gameObject.transform.localScale = new Vector3(.5f, .5f, 1);
             }
 
             public void Init(string size, string chestRarity, bool identified, ChestSpawner spawner)
