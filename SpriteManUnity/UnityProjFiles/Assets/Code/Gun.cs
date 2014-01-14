@@ -7,8 +7,8 @@ namespace Assets.Code
     {
         public float RateOfFire,
             GunRange,
-            BulletSpeed,
-            BulletDamage;
+            BulletSpeed;
+        public int BulletDamage;
         public Transform GunBarrel;
         public Bullet bullet;
         public bool shotright;

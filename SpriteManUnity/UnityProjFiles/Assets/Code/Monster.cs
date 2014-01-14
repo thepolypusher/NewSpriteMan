@@ -8,10 +8,10 @@ namespace Assets.Code
 {
     public class Monster : MonoBehaviour
     {
-        public string 
-            name,
-            type;
-        private int //derived
+        public string
+            name;
+            //type;
+        public int //derived
             _health,
             _speed;
 
@@ -26,12 +26,18 @@ namespace Assets.Code
 
         public void Start()
         {
-            MonsterBalancer(level, type, _isLeader);
+            MonsterBalancer(level, _isLeader);
         }
 
-        private void MonsterBalancer(int level, string type, bool isLeader) // takes all the initial values and derives health etc
+        public void Update()
         {
+            if (_health <= 0)
+                Destroy(gameObject);
+        }
 
+        private void MonsterBalancer(int level, bool isLeader) // takes all the initial values and derives health etc
+        {
+            _health = level*100;
         }
 
         public void Init(int monsterlevel, bool isLeader)
@@ -51,8 +57,8 @@ namespace Assets.Code
         public void SubtractHealth(int amount)
         {
             _health -= amount;
+            Debug.Log("I've been shot!");
         }
-
 
     }
 }

@@ -7,11 +7,11 @@ namespace Assets.Code
 
 
         private bool right;
-        private float bulletSpeed, bulletRange, bulletDamage, bulletAge = 0.0f;
+        private float bulletSpeed, bulletRange, bulletAge = 0.0f;
+        private int _bulletDamage;
 
         void Awake()
         {
-            print("new bullet spawned omfg!");
         }
 
         void FixedUpdate()
@@ -32,14 +32,13 @@ namespace Assets.Code
             if (bulletRange <= bulletAge)
             {
                 Destroy(gameObject);
-                print("Bullet dying of old age");
             }
         }
-        public void setAttribs(float gunspeed, float gunrange, float gundamage, bool isright)
+        public void setAttribs(float gunspeed, float gunrange, int gundamage, bool isright)
         {
             bulletSpeed = gunspeed;
             bulletRange = gunrange;
-            bulletDamage = gundamage;
+            _bulletDamage = gundamage;
             right = isright;
             if (!right)
             {
@@ -54,10 +53,11 @@ namespace Assets.Code
                 return;
             if (other.tag == "Enemy")
             {
-                var newMonster = other.transform.parent.gameObject;
-               // Monster monster = newMonster;
-
+                Transform newMonstertrans = other.transform.parent;
+                Monster newMonster = newMonstertrans.GetComponentInChildren<Monster>();
+                newMonster.SubtractHealth(_bulletDamage);
                 Destroy(gameObject);
+                Debug.Log("Applying " + _bulletDamage + " to monster");
             }
             else
                 Destroy(gameObject);

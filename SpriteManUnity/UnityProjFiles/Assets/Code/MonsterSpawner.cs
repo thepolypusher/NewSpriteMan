@@ -21,6 +21,7 @@ namespace Assets.Code
             if (_isActive)
             {
                 newmonster = Instantiate(newmonster, transform.position, transform.rotation) as Monster;
+                newmonster.Init(1, false);
                 Debug.Log("spawning a monster!");
                 _hasMonster = true;
             }
