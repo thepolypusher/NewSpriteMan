@@ -7,8 +7,8 @@ namespace Assets.Code
     {
         public LootManager LootMan;
         public Monster DebugMonster;
-        public List<ChestSpawner> SceneChests = new List<ChestSpawner>();
-        public List<MonsterSpawner> SceneMonsterSpawners = new List<MonsterSpawner>();
+        private List<ChestSpawner> SceneChests = new List<ChestSpawner>();
+        private List<MonsterSpawner> SceneMonsterSpawners = new List<MonsterSpawner>();
         public Scene ActiveScene;
         
 
@@ -18,28 +18,31 @@ namespace Assets.Code
             foreach (MonsterSpawner spawner in ts)
             {
                 SceneMonsterSpawners.Add(spawner);
-            }
-
-
-            foreach (MonsterSpawner spawner in SceneMonsterSpawners)
-            {
                 spawner.SpawnMonster(DebugMonster);
             }
+
+
+            //foreach (MonsterSpawner spawner in SceneMonsterSpawners)
+            //{
+            //    spawner.SpawnMonster(DebugMonster);
+            //}
 
             ChestSpawner[] cs = gameObject.GetComponentsInChildren<ChestSpawner>();
             foreach (ChestSpawner chestspawner in cs)
             {
                 SceneChests.Add(chestspawner);
+                var newChest = LootMan.ConstructChest(chestspawner);
+                chestspawner.Init(newChest);
             }
 
-            foreach (ChestSpawner newchestspawner in SceneChests)
-            {
-                if (!newchestspawner.hasChest)
-                {
-                    var newChest = LootMan.ConstructChest(newchestspawner);
-                    newchestspawner.Init(newChest);
-                }
-            }
+            //foreach (ChestSpawner newchestspawner in SceneChests)
+            //{
+            //    if (!newchestspawner.hasChest)
+            //    {
+            //        var newChest = LootMan.ConstructChest(newchestspawner);
+            //        newchestspawner.Init(newChest);
+            //    }
+            //}
 
         }
 

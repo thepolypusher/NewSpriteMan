@@ -17,18 +17,31 @@ namespace Assets.Code
             private ChestSpawner mySpawner;
             public int chestID;
 
-            public void Start()
+            private SpriteRenderer spriterend;
+
+            public Sprite defaultSprite;
+            public Sprite CommonSprite,
+                UncommonSprite,
+                RareSprite,
+                LegendarySprite;
+            
+            public void Awake()
             {
-                if (chestsize == "huge")
-                    gameObject.transform.localScale = new Vector3(4f,4f, 1);
-                if (chestsize == "large")
-                    gameObject.transform.localScale = new Vector3(3f, 3f, 1);
-                if (chestsize == "medium")
-                    gameObject.transform.localScale = new Vector3(2f, 2f, 1);
-                if (chestsize == "small")
-                    gameObject.transform.localScale = new Vector3(1f, 1f, 1);
-                if (chestsize == "tiny")
-                    gameObject.transform.localScale = new Vector3(.5f, .5f, 1);
+                spriterend = gameObject.GetComponent<SpriteRenderer>();
+                defaultSprite = spriterend.sprite;
+                switch (rarity)
+                {
+                    case "common": defaultSprite = CommonSprite;
+                        break;
+                    case "uncommon": defaultSprite = UncommonSprite;
+                        break;
+                    case "rare": defaultSprite = RareSprite;
+                        break;
+                    case "legendary": defaultSprite = LegendarySprite;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             public void Init(string size, string chestRarity, bool identified, ChestSpawner spawner)
@@ -37,6 +50,23 @@ namespace Assets.Code
                 rarity = chestRarity;
                 IDed = identified;
                 mySpawner = spawner;
+
+                switch (chestsize)
+                {
+                    case "huge": gameObject.transform.localScale = new Vector3(4f, 4f, 1);
+                        break;
+                    case "large": gameObject.transform.localScale = new Vector3(3f, 3f, 1);
+                        break;
+                    case "medium": gameObject.transform.localScale = new Vector3(2f, 2f, 1);
+                        break;
+                    case "small": gameObject.transform.localScale = new Vector3(1f, 1f, 1);
+                        break;
+                    case "tiny": gameObject.transform.localScale = new Vector3(.5f, .5f, 1);
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
             public void AddItem(Item newItem)

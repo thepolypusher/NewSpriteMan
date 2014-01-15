@@ -6,8 +6,9 @@ namespace Assets.Code
     public class CameraFollow : MonoBehaviour
     {
         public GameObject SpriteMan;
-
-
+        public int CameraHeight,
+            RightWall,
+            LeftWall; // define default height and deadzone parameters
 
         void Start()
         {
@@ -18,7 +19,8 @@ namespace Assets.Code
         {
             float xpos = SpriteMan.transform.position.x;
             float cameraxpos = gameObject.transform.position.x;
-            gameObject.transform.position = new Vector3(xpos, SpriteMan.transform.position.y, -10f);
+            
+            gameObject.transform.position = new Vector3(xpos, CameraHeight, -10f);
         }
     }
 }
