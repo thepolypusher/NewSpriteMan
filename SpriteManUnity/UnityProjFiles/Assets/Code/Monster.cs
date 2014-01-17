@@ -9,24 +9,21 @@ namespace Assets.Code
     public class Monster : MonoBehaviour
     {
         public string
-            name;
-            //type;
-        public int //derived
+            name,
+            monstertype;
+        public float //derived
             _health,
             _speed;
-
+        
+        public string MonsterState = "sleep";
 
         private int level,
             _xp;
 
-        private Monster _leader;
         private MonsterSpawner _spawner;
-        private bool _isActive;
-        private bool _isLeader;
 
         public void Start()
         {
-            MonsterBalancer(level, _isLeader);
         }
 
         public void Update()
@@ -35,29 +32,41 @@ namespace Assets.Code
                 Destroy(gameObject);
         }
 
-        private void MonsterBalancer(int level, bool isLeader) // takes all the initial values and derives health etc
+        private void MonsterBalancer(int level, string type) // takes all the initial values and derives health etc
         {
+            float BalanceFudge = 1.0f;
+
             _health = level*100;
+            switch (type)
+            {
+                case "brute": _health += 20 * level;
+                    break;
+                case "grunt": _health += 5 * level;
+                    _speed += 1;
+                    break;
+                case "blade": _health += 1 * level;
+                    _speed += 3;
+                    break;
+                default:
+                    break;
+
+            }
+            
+            _health *= BalanceFudge;
+            _health *= 1.0f / UnityEngine.Random.Range(1, 11);
+            _health += 7;
         }
 
-        public void Init(int monsterlevel, bool isLeader)
+        public void Init(int monsterlevel)
         {
-            if (isLeader)
-                MakeLeader();
-
             level = monsterlevel;
-        }
+            MonsterBalancer(level, monstertype);
 
-        public void MakeLeader()
-        {
-            _leader = null;
-            _isLeader = true;
         }
 
         public void SubtractHealth(int amount)
         {
             _health -= amount;
-            Debug.Log("I've been shot!");
         }
 
     }

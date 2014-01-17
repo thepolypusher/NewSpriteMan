@@ -5,10 +5,10 @@ namespace Assets.Code
 {
     public class MasterManager : MonoBehaviour
     {
-        public LootManager lootMan;
-        public Director director;
-        public PlayerManager playerMan;
-        public SceneManager sceneMan;
-
+        public LootManager LootMan;
+        public Director Director;
+        public PlayerManager PlayerMan;
+        public SceneManager SceneMan;
+        public BaseManager BaseMan;
     }
 }

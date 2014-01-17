@@ -49,18 +49,21 @@ namespace Assets.Code
         }
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "Player" || other == gameObject)
+            // this could more elegantly filter out the things I dont care about hitting. Right now
+            //level geometry has to be added as "Geo" to hit it
+            if (other.tag == "Player")
                 return;
+            if (other.tag == "Geo")
+                Destroy(gameObject);
             if (other.tag == "Enemy")
             {
-                Transform newMonstertrans = other.transform.parent;
+                Transform newMonstertrans = other.transform;
                 Monster newMonster = newMonstertrans.GetComponentInChildren<Monster>();
                 newMonster.SubtractHealth(_bulletDamage);
                 Destroy(gameObject);
-                Debug.Log("Applying " + _bulletDamage + " to monster");
             }
-            else
-                Destroy(gameObject);
+            else //chests and other colliders I don't care about
+                return;
         }
     }
 }

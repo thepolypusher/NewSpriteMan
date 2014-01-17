@@ -9,6 +9,10 @@ public class PlayerControl : MonoBehaviour
 	public float maxSpeed = 10f;
 	private bool facingRight = true;
 	public float jumpForce = 700f;
+    public float jetpackfuel = 4f,
+        maxjetpackfuel = 4f,
+        jetpackforce = 40f;
+    private bool stillholdingjump = true;
 
 	public Gun _gun;
 
@@ -18,10 +22,13 @@ public class PlayerControl : MonoBehaviour
 	public Transform groundCheck;
 	float groundRadius = 0.2f;
 	public LayerMask whatIsGround;
+    private SceneManager SceneMan;
+
 
 	void Start () 
 	{
 		anim = GetComponent<Animator>();
+        SceneMan = FindObjectOfType<SceneManager>();
 	}
 	
 	void FixedUpdate () 
@@ -46,17 +53,47 @@ public class PlayerControl : MonoBehaviour
 	}
 	void Update()
 	{
-		if(grounded && Input.GetKeyDown(KeyCode.Space))
+        // Controls
+
+        bool fire = Input.GetButton("Fire1");
+        bool use = Input.GetButtonDown("Fire2");
+        bool jump = Input.GetButtonDown("Jump");
+        bool holdjump = Input.GetButton("Jump");
+
+        if(grounded && jump)
 		{
 			anim.SetBool("Ground", false);
 			rigidbody2D.AddForce (new Vector2(0, jumpForce));
+            stillholdingjump = true;
 		}
-		bool fire = Input.GetButton ("Fire1");
+
+        if (Input.GetButtonUp("Jump"))
+        {
+            stillholdingjump = false;         
+        }
+
+        if (!grounded && holdjump && !stillholdingjump && jetpackfuel > 0f)
+        {
+            rigidbody2D.AddForce(new Vector2(0, jetpackforce));
+            jetpackfuel -= Time.deltaTime;
+        }
+
 
 		if (fire)
 		{
 			_gun.TryShoot(facingRight);
 		}
+
+        if (use)
+        {
+            
+            foreach (InteractByProximity intobj in SceneMan.SceneInteractiveObjects)
+            {
+                if (intobj.PlayerCanInteract)
+                    intobj.UseObject();
+            }
+
+        }
 
 
             

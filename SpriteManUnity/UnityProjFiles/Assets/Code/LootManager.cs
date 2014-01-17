@@ -1,31 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
 using UnityEngine;
-
 
 namespace Assets.Code
 {
     public class LootManager : MonoBehaviour
     {
-        public MasterManager Master;
+        private MasterManager _masterMan;
         public Chest chestPrefab;
         public LootTable lootTable;
-        public Player _player;
-        //public List<Chest> sceneChests = new List<Chest>();
 
         private int raritythresh = 8; // Increasing this value makes all loot more rare. 7= about 70% junk
         
-        //public method for a chest spawner to request a chest
-
-        private void Start()
+        private void Awake()
         {
-        }
-
-        public void Update()
-        {
+            _masterMan = FindObjectOfType<MasterManager>();
         }
 
         public Chest ConstructChest(ChestSpawner spawner)

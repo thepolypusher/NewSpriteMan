@@ -5,51 +5,45 @@ namespace Assets.Code
 {
     public class SceneManager : MonoBehaviour
     {
-        public LootManager LootMan;
         public Monster DebugMonster;
+        public List<InteractByProximity> SceneInteractiveObjects = new List<InteractByProximity>();
+
+        private MasterManager _masterMan;
+        public Scene ActiveScene;
+        private Player player; 
         private List<ChestSpawner> SceneChests = new List<ChestSpawner>();
         private List<MonsterSpawner> SceneMonsterSpawners = new List<MonsterSpawner>();
-        public Scene ActiveScene;
-        
 
-        public void Awake()
+        void Awake()
         {
-            MonsterSpawner[] ts = gameObject.GetComponentsInChildren<MonsterSpawner>();
+            ActiveScene = FindObjectOfType<Scene>();
+            player = FindObjectOfType<Player>();
+            _masterMan = FindObjectOfType<MasterManager>();
+            MonsterSpawner[] ts = ActiveScene.GetComponentsInChildren<MonsterSpawner>();
             foreach (MonsterSpawner spawner in ts)
             {
                 SceneMonsterSpawners.Add(spawner);
                 spawner.SpawnMonster(DebugMonster);
             }
 
-
-            //foreach (MonsterSpawner spawner in SceneMonsterSpawners)
-            //{
-            //    spawner.SpawnMonster(DebugMonster);
-            //}
-
-            ChestSpawner[] cs = gameObject.GetComponentsInChildren<ChestSpawner>();
+            ChestSpawner[] cs = ActiveScene.GetComponentsInChildren<ChestSpawner>();
             foreach (ChestSpawner chestspawner in cs)
             {
                 SceneChests.Add(chestspawner);
-                var newChest = LootMan.ConstructChest(chestspawner);
+                var newChest = _masterMan.LootMan.ConstructChest(chestspawner);
                 chestspawner.Init(newChest);
             }
+            
+            InteractByProximity[] intobjs = FindObjectsOfType<InteractByProximity>();
+            foreach (InteractByProximity intobj in intobjs)
+                SceneInteractiveObjects.Add(intobj);
 
-            //foreach (ChestSpawner newchestspawner in SceneChests)
-            //{
-            //    if (!newchestspawner.hasChest)
-            //    {
-            //        var newChest = LootMan.ConstructChest(newchestspawner);
-            //        newchestspawner.Init(newChest);
-            //    }
-            //}
-
+            player.transform.position = ActiveScene.PlayerStartPoint.position;
         }
 
         public void SpawnMonster(MonsterSpawner spawner, Monster monster)
         {
             spawner.SpawnMonster(monster);
         }
-
     }
 }

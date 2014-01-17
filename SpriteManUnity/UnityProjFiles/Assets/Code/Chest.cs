@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Code
     {
-        public class Chest : MonoBehaviour
+        public class Chest : Item
         {
             public List<Item> goods;
 
@@ -15,11 +15,7 @@ namespace Assets.Code
             private bool locked = true;
             private bool IDed;
             private ChestSpawner mySpawner;
-            public int chestID;
-
-            private SpriteRenderer spriterend;
-
-            public Sprite defaultSprite;
+            
             public Sprite CommonSprite,
                 UncommonSprite,
                 RareSprite,
@@ -27,21 +23,7 @@ namespace Assets.Code
             
             public void Awake()
             {
-                spriterend = gameObject.GetComponent<SpriteRenderer>();
-                defaultSprite = spriterend.sprite;
-                switch (rarity)
-                {
-                    case "common": defaultSprite = CommonSprite;
-                        break;
-                    case "uncommon": defaultSprite = UncommonSprite;
-                        break;
-                    case "rare": defaultSprite = RareSprite;
-                        break;
-                    case "legendary": defaultSprite = LegendarySprite;
-                        break;
-                    default:
-                        break;
-                }
+
             }
 
             public void Init(string size, string chestRarity, bool identified, ChestSpawner spawner)
@@ -51,7 +33,9 @@ namespace Assets.Code
                 IDed = identified;
                 mySpawner = spawner;
 
-                switch (chestsize)
+                // change the size of the sprite depending on chestsize value
+                // TODO when assets are available, load different images
+                switch (chestsize) 
                 {
                     case "huge": gameObject.transform.localScale = new Vector3(4f, 4f, 1);
                         break;
@@ -66,7 +50,20 @@ namespace Assets.Code
                     default:
                         break;
                 }
-
+                
+                switch (rarity)
+                {
+                    case "common": gameObject.GetComponent<SpriteRenderer>().sprite = CommonSprite;
+                        break;
+                    case "uncommon": gameObject.GetComponent<SpriteRenderer>().sprite = UncommonSprite;
+                        break;
+                    case "rare": gameObject.GetComponent<SpriteRenderer>().sprite = RareSprite;
+                        break;
+                    case "legendary": gameObject.GetComponent<SpriteRenderer>().sprite = LegendarySprite;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             public void AddItem(Item newItem)
@@ -108,6 +105,34 @@ namespace Assets.Code
                 else
                 {
                     //for each item in the goods list, copy it to the container, erase the goods list and destroy the chest
+                }
+            }
+
+            public override void Use()
+            {
+                MasterManager masterMan = FindObjectOfType<MasterManager>();
+                /// If player isn't in the vault, collect the chest
+                if (masterMan.SceneMan.ActiveScene.name != "Vault")
+                {
+                    masterMan.BaseMan.PlayerVault.AddItem(this);
+                    gameObject.transform.position = masterMan.transform.position;
+                }
+                ///Triggered if player is in the vault and the chest is not locked
+                else if (!locked)
+                {
+                    foreach (Item item in goods)
+                    {
+                        if (item != null)
+                            TransferItem(item, masterMan.PlayerMan.Playerinv);
+                        print("transferring items");
+                    }
+                    Destroy(gameObject);
+                }
+                else if (locked)
+                {
+                    //prompt user to either ID or Unlock the chest
+                    //alternatively, IDing should occur automatically by the computer, so
+                    //the only action necessary here is to Unlock the chest if the key is owned
                 }
             }
         }

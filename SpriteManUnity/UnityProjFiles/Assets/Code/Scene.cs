@@ -6,5 +6,7 @@ namespace Assets.Code
 {
     public class Scene : MonoBehaviour
     {
+        public Transform PlayerStartPoint;
+        public string name;
     }
 }
