@@ -57,8 +57,7 @@ namespace Assets.Code
                 Destroy(gameObject);
             if (other.tag == "Enemy")
             {
-                Transform newMonstertrans = other.transform;
-                Monster newMonster = newMonstertrans.GetComponentInChildren<Monster>();
+                Monster newMonster = other.GetComponent<Monster>();
                 newMonster.SubtractHealth(_bulletDamage);
                 Destroy(gameObject);
             }

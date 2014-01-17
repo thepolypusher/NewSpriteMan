@@ -12,7 +12,7 @@ namespace Assets.Code
 
             private string chestsize;
             public string rarity;
-            private bool locked = true;
+            public bool locked = true;
             private bool IDed;
             private ChestSpawner mySpawner;
             

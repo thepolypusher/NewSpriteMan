@@ -32,6 +32,9 @@ namespace Assets.Code
             Item newItem;
             switch (rarity)
             {
+                case "nothing": newItem  = null;
+                    print("No item result");
+                    break;
                 case "junk": newItem = GetItemFromTable(junkTable);
                     break;
                 case "common": newItem = GetItemFromTable(commonTable);

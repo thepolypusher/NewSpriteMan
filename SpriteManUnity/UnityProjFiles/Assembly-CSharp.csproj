@@ -49,6 +49,7 @@
      <Compile Include="Assets\Code\BaseManager.cs" />
      <Compile Include="Assets\Code\Bullet.cs" />
      <Compile Include="Assets\Code\CameraFollow.cs" />
+     <Compile Include="Assets\Code\CameraVisionCatcher.cs" />
      <Compile Include="Assets\Code\Chest.cs" />
      <Compile Include="Assets\Code\ChestSpawner.cs" />
      <Compile Include="Assets\Code\Container.cs" />
@@ -56,8 +57,10 @@
      <Compile Include="Assets\Code\Director.cs" />
      <Compile Include="Assets\Code\Gun.cs" />
      <Compile Include="Assets\Code\InteractByProximity.cs" />
+     <Compile Include="Assets\Code\Items\DroppedLoot.cs" />
      <Compile Include="Assets\Code\Items\Item.cs" />
      <Compile Include="Assets\Code\Items\Key.cs" />
+     <Compile Include="Assets\Code\Items\Resource.cs" />
      <Compile Include="Assets\Code\LootManager.cs" />
      <Compile Include="Assets\Code\LootTable.cs" />
      <Compile Include="Assets\Code\MasterManager.cs" />

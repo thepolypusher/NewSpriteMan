@@ -30,10 +30,13 @@ namespace Assets.Code
 
         public Item ItemLootDrop()
         {
-            Item newItem;// need to add a way to not drop anything (shouldnt be 100% to get items)
+            Item newItem;
             int rarity = GetRarity(raritythresh);
             string raritystring = DropRarity(rarity);
-            newItem = lootTable.GetItem(raritystring);
+            //if (raritystring != "nothing")
+            //    return null;
+            //else
+                newItem = lootTable.GetItem(raritystring);
             return newItem;
         }
 
@@ -76,15 +79,15 @@ namespace Assets.Code
             string newrarity;
             switch (rarity)
             {
-                case 1: newrarity = "junk";
+                case 1: newrarity = "nothing";
                     break;
-                case 2: newrarity = "common";
+                case 2: newrarity = "junk";
                     break;
-                case 3: newrarity = "uncommon";
+                case 3: newrarity = "common";
                     break;
-                case 4: newrarity = "rare";
+                case 4: newrarity = "uncommon";
                     break;
-                case 5: newrarity = "legendary";
+                case 5: newrarity = "rare";
                     break;
                 default: throw new ArgumentException("X is greater than 5");
             }

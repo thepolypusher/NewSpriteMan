@@ -12,17 +12,21 @@ namespace Assets.Code
         public Scene ActiveScene;
         private Player player; 
         private List<ChestSpawner> SceneChests = new List<ChestSpawner>();
-        private List<MonsterSpawner> SceneMonsterSpawners = new List<MonsterSpawner>();
+        public List<MonsterSpawner> AvailableMonsterSpawners = new List<MonsterSpawner>();
+        public List<MonsterSpawner> ActiveMonsterSpawners = new List<MonsterSpawner>();
+        private Camera MainCamera;
+        private PlayerManager _playerMan;
 
         void Awake()
         {
             ActiveScene = FindObjectOfType<Scene>();
+            MainCamera = FindObjectOfType<Camera>();
             player = FindObjectOfType<Player>();
             _masterMan = FindObjectOfType<MasterManager>();
             MonsterSpawner[] ts = ActiveScene.GetComponentsInChildren<MonsterSpawner>();
             foreach (MonsterSpawner spawner in ts)
             {
-                SceneMonsterSpawners.Add(spawner);
+                AvailableMonsterSpawners.Add(spawner);
                 spawner.SpawnMonster(DebugMonster);
             }
 
@@ -45,5 +49,26 @@ namespace Assets.Code
         {
             spawner.SpawnMonster(monster);
         }
+
+        public void MonsterDied(Monster monster)
+        {
+            int _chanceForLoot = 3;
+            int _randomroll = UnityEngine.Random.Range(0, 10);
+            Item newItem; 
+            
+            _masterMan.PlayerMan.AddXP(monster._xp);
+            _masterMan.Director.AddToBudget(monster._xp);
+
+            if (_randomroll >= _chanceForLoot)
+            {
+                newItem = _masterMan.LootMan.ItemLootDrop();
+                if(newItem.GetType() == typeof(DroppedLoot))
+                {
+                    ;//how to give the item to the player. Had trouble getting Use() to give directly to the player
+                }
+            }
+        }
+
+
     }
 }

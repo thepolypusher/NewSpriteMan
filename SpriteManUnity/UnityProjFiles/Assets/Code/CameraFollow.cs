@@ -12,7 +12,6 @@ namespace Assets.Code
 
         void Start()
         {
-
         }
 
         void Update()

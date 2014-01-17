@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Code
 {
@@ -11,19 +7,22 @@ namespace Assets.Code
         public string
             name,
             monstertype;
-        public float //derived
+        private float //derived
             _health,
             _speed;
+
+        private MasterManager _masterMan;
         
         public string MonsterState = "sleep";
 
-        private int level,
+        public int level,
             _xp;
 
         private MonsterSpawner _spawner;
 
-        public void Start()
+        public void Awake()
         {
+            _masterMan = FindObjectOfType<MasterManager>();
         }
 
         public void Update()
@@ -61,7 +60,7 @@ namespace Assets.Code
         {
             level = monsterlevel;
             MonsterBalancer(level, monstertype);
-
+            _xp = monsterlevel * 100;
         }
 
         public void SubtractHealth(int amount)
@@ -69,5 +68,15 @@ namespace Assets.Code
             _health -= amount;
         }
 
+        public void OnDestroy()
+        {
+            _masterMan.SceneMan.MonsterDied(this);
+            
+            //_masterMan.PlayerMan.AddXP(_xp);
+            //print("I'm destroyed. Giving " + _xp + " xp");
+            //Item newItem = _masterMan.LootMan.ItemLootDrop();
+            //if (newItem != null)
+            //    newItem.Use();                
+        }
     }
 }

@@ -11,10 +11,20 @@ namespace Assets.Code
         private List<Chest> _vaultChests;
         public Container Playerinv;
 
+        public int PlayerHealth,
+            PlayerMoney;
+
+        public int _xp;
+
         void Awake()
         {
             _player = FindObjectOfType<Player>();
-            Playerinv = GetComponent<Container>();
+            //Playerinv = GetComponent<Container>();
+        }
+
+        public void AddXP(int xpval)
+        {
+            _xp += xpval;
         }
 
     }

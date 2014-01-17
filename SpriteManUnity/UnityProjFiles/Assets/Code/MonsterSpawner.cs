@@ -6,11 +6,13 @@ namespace Assets.Code
 {
     public class MonsterSpawner : MonoBehaviour
     {
-        private bool _isActive = true;
+        public bool _isActive = true;
         private bool _hasMonster = false;
+        private SceneManager SceneMan;
 
         public void Awake()
         {
+            SceneManager SceneMan = FindObjectOfType<SceneManager>();
         }
 
         public void SpawnMonster(Monster newmonster)
@@ -23,6 +25,18 @@ namespace Assets.Code
                 newmonster.Init(1);
                 _hasMonster = true;
             }
+        }
+
+        public void ActivateSpawner()
+        {
+            _isActive = true;
+            SceneMan.ActiveMonsterSpawners.Add(this);
+        }
+
+        public void DeactivateSpawner()
+        {
+            _isActive = false;
+            SceneMan.ActiveMonsterSpawners.Remove(this);
         }
     }
 }
