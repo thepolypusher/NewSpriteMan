@@ -9,7 +9,7 @@ namespace Assets.Code
         public Chest chestPrefab;
         public LootTable lootTable;
 
-        private int raritythresh = 8; // Increasing this value makes all loot more rare. 7= about 70% junk
+        public int raritythresh = 8; // Increasing this value makes all loot more rare. 7= about 70% junk
         
         private void Awake()
         {

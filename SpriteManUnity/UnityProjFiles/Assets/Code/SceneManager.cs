@@ -50,16 +50,16 @@ namespace Assets.Code
             spawner.SpawnMonster(monster);
         }
 
-        public void MonsterDied(Monster monster)
+        public void MonsterDied(MonsterAC monster)
         {
-            int _chanceForLoot = 3;
+            int _chanceForLoot = _masterMan.LootMan.raritythresh;
             int _randomroll = UnityEngine.Random.Range(0, 10);
             Item newItem; 
             
-            _masterMan.PlayerMan.AddXP(monster._xp);
-            _masterMan.Director.AddToBudget(monster._xp);
+            _masterMan.PlayerMan.AddXP(monster.Xp);
+            _masterMan.Director.AddToBudget(monster.Xp);
 
-            if (_randomroll >= _chanceForLoot)
+            if (_randomroll <= _chanceForLoot)
             {
                 newItem = _masterMan.LootMan.ItemLootDrop();
                 if(newItem.GetType() == typeof(DroppedLoot))

@@ -68,15 +68,15 @@ namespace Assets.Code
             _health -= amount;
         }
 
-        public void OnDestroy()
-        {
-            _masterMan.SceneMan.MonsterDied(this);
+        //public void OnDestroy()
+        //{
+        //    _masterMan.SceneMan.MonsterDied(this);
             
-            //_masterMan.PlayerMan.AddXP(_xp);
-            //print("I'm destroyed. Giving " + _xp + " xp");
-            //Item newItem = _masterMan.LootMan.ItemLootDrop();
-            //if (newItem != null)
-            //    newItem.Use();                
-        }
+        //    //_masterMan.PlayerMan.AddXP(_xp);
+        //    //print("I'm destroyed. Giving " + _xp + " xp");
+        //    //Item newItem = _masterMan.LootMan.ItemLootDrop();
+        //    //if (newItem != null)
+        //    //    newItem.Use();                
+        //}
     }
 }

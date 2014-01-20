@@ -7,7 +7,7 @@ namespace Assets.Code
 
 
         private bool right;
-        private float bulletSpeed, bulletRange, bulletAge = 0.0f;
+        private float bulletSpeed, bulletRange, bulletAge;
         private int _bulletDamage;
 
         void Awake()
@@ -57,8 +57,8 @@ namespace Assets.Code
                 Destroy(gameObject);
             if (other.tag == "Enemy")
             {
-                Monster newMonster = other.GetComponent<Monster>();
-                newMonster.SubtractHealth(_bulletDamage);
+                MonsterAC newMonster = other.GetComponent<MonsterAC>();
+                newMonster.Damage(_bulletDamage);
                 Destroy(gameObject);
             }
             else //chests and other colliders I don't care about

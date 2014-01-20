@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 namespace Assets.Code
@@ -34,12 +35,20 @@ namespace Assets.Code
             {
                 shotright = right;
 
-
                 var newBullet = Instantiate(bullet, GunBarrel.transform.position, GunBarrel.transform.rotation) as Bullet;
                 newBullet.setAttribs(BulletSpeed, GunRange, BulletDamage, right);
 
                 _lastshottime = _time;
             }
+        }
+
+        public void MonsterGunInit(float MonsteRateOfFire, int AttackDamage, float AttackRange, Transform MonsterGunOrigin)
+        {
+            //special init method for monster guns so that these values get decided on the monster.
+            MonsteRateOfFire = RateOfFire;
+            BulletDamage = AttackDamage;
+            GunRange = AttackRange;
+            GunBarrel = MonsterGunOrigin;
         }
 
     }
