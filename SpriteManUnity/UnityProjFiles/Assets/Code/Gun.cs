@@ -13,7 +13,8 @@ namespace Assets.Code
         public Transform GunBarrel;
         public Bullet bullet;
         public bool shotright;
-
+        private bool playerGun = true;
+        
 
         private float _time = 0f;
         private float _lastshottime = 0f;
@@ -36,19 +37,21 @@ namespace Assets.Code
                 shotright = right;
 
                 var newBullet = Instantiate(bullet, GunBarrel.transform.position, GunBarrel.transform.rotation) as Bullet;
-                newBullet.setAttribs(BulletSpeed, GunRange, BulletDamage, right);
+                newBullet.setAttribs(BulletSpeed, GunRange, BulletDamage, right, playerGun);
 
                 _lastshottime = _time;
             }
         }
 
-        public void MonsterGunInit(float MonsteRateOfFire, int AttackDamage, float AttackRange, Transform MonsterGunOrigin)
+        public void MonsterGunInit(float MonsteRateOfFire, int AttackDamage, float AttackRange, float AttackBulletSpeed, Transform MonsterGunOrigin)
         {
             //special init method for monster guns so that these values get decided on the monster.
             MonsteRateOfFire = RateOfFire;
             BulletDamage = AttackDamage;
             GunRange = AttackRange;
             GunBarrel = MonsterGunOrigin;
+            BulletSpeed = AttackBulletSpeed;
+            playerGun = false;
         }
 
     }

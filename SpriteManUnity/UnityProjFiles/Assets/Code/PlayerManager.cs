@@ -10,6 +10,7 @@ namespace Assets.Code
         private Player _player;
         private List<Chest> _vaultChests;
         public Container Playerinv;
+        public int PlayerLevel;
 
         public int PlayerHealth,
             PlayerMoney;

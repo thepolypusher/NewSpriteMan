@@ -23,7 +23,7 @@ public class PlayerControl : MonoBehaviour
 	float groundRadius = 0.2f;
 	public LayerMask whatIsGround;
     private SceneManager SceneMan;
-
+    private bool _canFlip = true;
 
 	void Start () 
 	{
@@ -44,9 +44,9 @@ public class PlayerControl : MonoBehaviour
 
 		rigidbody2D.velocity = new Vector2(move*maxSpeed, rigidbody2D.velocity.y);
 
-		if (move > 0 && !facingRight)
+		if (_canFlip && move > 0 && !facingRight)
 			Flip ();
-		else if (move < 0 && facingRight)
+        else if (_canFlip && move < 0 && facingRight)
 			Flip ();
 
 
@@ -56,6 +56,7 @@ public class PlayerControl : MonoBehaviour
         // Controls
 
         bool fire = Input.GetButton("Fire1");
+        bool resetCanFire = Input.GetButtonUp("Fire1");
         bool use = Input.GetButtonDown("Fire2");
         bool jump = Input.GetButtonDown("Jump");
         bool holdjump = Input.GetButton("Jump");
@@ -81,18 +82,21 @@ public class PlayerControl : MonoBehaviour
 
 		if (fire)
 		{
+            _canFlip = false;
 			_gun.TryShoot(facingRight);
 		}
 
+        if (resetCanFire)
+            _canFlip = true;
+
+
         if (use)
         {
-            
             foreach (InteractByProximity intobj in SceneMan.SceneInteractiveObjects)
             {
                 if (intobj.PlayerCanInteract)
                     intobj.UseObject();
             }
-
         }
 
 

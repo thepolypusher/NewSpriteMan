@@ -5,15 +5,15 @@ namespace Assets.Code
 {
     public class SceneManager : MonoBehaviour
     {
-        public Monster DebugMonster;
+        public MonsterAC DebugMonster;
         public List<InteractByProximity> SceneInteractiveObjects = new List<InteractByProximity>();
 
+        public int MonsterSpawnerActivationRange;
         private MasterManager _masterMan;
         public Scene ActiveScene;
         private Player player; 
         private List<ChestSpawner> SceneChests = new List<ChestSpawner>();
         public List<MonsterSpawner> AvailableMonsterSpawners = new List<MonsterSpawner>();
-        public List<MonsterSpawner> ActiveMonsterSpawners = new List<MonsterSpawner>();
         private Camera MainCamera;
         private PlayerManager _playerMan;
 
@@ -27,8 +27,9 @@ namespace Assets.Code
             foreach (MonsterSpawner spawner in ts)
             {
                 AvailableMonsterSpawners.Add(spawner);
-                spawner.SpawnMonster(DebugMonster);
+                //spawner.SpawnMonster(DebugMonster); //Debug action to spawn a monster in each spawnpoint in the level
             }
+            GetActiveSpawners();
 
             ChestSpawner[] cs = ActiveScene.GetComponentsInChildren<ChestSpawner>();
             foreach (ChestSpawner chestspawner in cs)
@@ -45,7 +46,7 @@ namespace Assets.Code
             player.transform.position = ActiveScene.PlayerStartPoint.position;
         }
 
-        public void SpawnMonster(MonsterSpawner spawner, Monster monster)
+        public void SpawnMonster(MonsterSpawner spawner, MonsterAC monster)
         {
             spawner.SpawnMonster(monster);
         }
@@ -57,7 +58,7 @@ namespace Assets.Code
             Item newItem; 
             
             _masterMan.PlayerMan.AddXP(monster.Xp);
-            _masterMan.Director.AddToBudget(monster.Xp);
+            _masterMan.Director.AddToBudget((monster.Coins*_masterMan.Director.RefundOnCoins) /100);
 
             if (_randomroll <= _chanceForLoot)
             {
@@ -67,6 +68,22 @@ namespace Assets.Code
                     ;//how to give the item to the player. Had trouble getting Use() to give directly to the player
                 }
             }
+        }
+
+        public List<MonsterSpawner> GetActiveSpawners()
+        {
+            //ActiveMonsterSpawners.Clear(); //initialize an empty list of active spawners
+            List<MonsterSpawner> ActiveMonsterSpawners = new List<MonsterSpawner>();
+
+            foreach(MonsterSpawner spawner in AvailableMonsterSpawners)
+            {
+                var distancetoplayer = Vector2.Distance(spawner.transform.position, player.transform.position);
+                if (distancetoplayer <= MonsterSpawnerActivationRange)
+                {
+                    ActiveMonsterSpawners.Add(spawner);
+                }
+            }
+            return ActiveMonsterSpawners;
         }
 
 

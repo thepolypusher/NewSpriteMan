@@ -15,28 +15,25 @@ namespace Assets.Code
             SceneManager SceneMan = FindObjectOfType<SceneManager>();
         }
 
-        public void SpawnMonster(Monster newmonster)
+        public void SpawnMonster(MonsterAC newmonster)
         {
-            if (_isActive)
-            {
-                //debug monster spawning until Director is hooked up. Spawns the scene's default monster
-                //add 'level' to the function arguments to pass that on to Init
-                newmonster = Instantiate(newmonster, transform.position, transform.rotation) as Monster;
-                newmonster.Init(1);
-                _hasMonster = true;
-            }
+            //debug monster spawning until Director is hooked up. Spawns the scene's default monster
+            //add 'level' to the function arguments to pass that on to Init
+            newmonster = Instantiate(newmonster, transform.position, transform.rotation) as MonsterAC;
+            newmonster.Init(1);
+            _hasMonster = true;
         }
 
-        public void ActivateSpawner()
-        {
-            _isActive = true;
-            SceneMan.ActiveMonsterSpawners.Add(this);
-        }
+        //public void ActivateSpawner()
+        //{
+        //    _isActive = true;
+        //    SceneMan.ActiveMonsterSpawners.Add(this);
+        //}
 
-        public void DeactivateSpawner()
-        {
-            _isActive = false;
-            SceneMan.ActiveMonsterSpawners.Remove(this);
-        }
+        //public void DeactivateSpawner()
+        //{
+        //    _isActive = false;
+        //    SceneMan.ActiveMonsterSpawners.Remove(this);
+        //}
     }
 }

@@ -6,9 +6,10 @@ namespace Assets.Code
     {
 
 
-        private bool right;
-        private float bulletSpeed, bulletRange, bulletAge;
-        private int _bulletDamage;
+        public bool right;
+        public float bulletSpeed, bulletRange, bulletAge;
+        public int _bulletDamage;
+        public bool _playerBullet;
 
         void Awake()
         {
@@ -34,12 +35,13 @@ namespace Assets.Code
                 Destroy(gameObject);
             }
         }
-        public void setAttribs(float gunspeed, float gunrange, int gundamage, bool isright)
+        public void setAttribs(float gunspeed, float gunrange, int gundamage, bool isright, bool plyrBullet)
         {
             bulletSpeed = gunspeed;
             bulletRange = gunrange;
             _bulletDamage = gundamage;
             right = isright;
+            _playerBullet = plyrBullet;
             if (!right)
             {
                 Vector3 theScale = transform.localScale;
@@ -51,16 +53,35 @@ namespace Assets.Code
         {
             // this could more elegantly filter out the things I dont care about hitting. Right now
             //level geometry has to be added as "Geo" to hit it
-            if (other.tag == "Player")
-                return;
+            if (_playerBullet)
+            {
+                if (other.tag == "Player")
+                    return;
+                if (other.tag == "Enemy")
+                {
+                    Debug.Log("hit by bullet");
+                    MonsterAC newMonster = other.GetComponent<MonsterAC>();
+                    newMonster.Damage(_bulletDamage);
+                    Destroy(gameObject);
+                }
+                else
+                    return;
+            }
+            else
+            {
+                if (other.tag == "Enemy")
+                    return;
+                if (other.tag == "Player")
+                {
+                    Debug.Log("Hit a player");
+                    Destroy(gameObject);
+                }
+                else
+                    return;
+            }
             if (other.tag == "Geo")
                 Destroy(gameObject);
-            if (other.tag == "Enemy")
-            {
-                MonsterAC newMonster = other.GetComponent<MonsterAC>();
-                newMonster.Damage(_bulletDamage);
-                Destroy(gameObject);
-            }
+
             else //chests and other colliders I don't care about
                 return;
         }
