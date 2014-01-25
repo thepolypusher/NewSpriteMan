@@ -63,10 +63,7 @@ namespace Assets.Code
             if (_randomroll <= _chanceForLoot)
             {
                 newItem = _masterMan.LootMan.ItemLootDrop();
-                if(newItem.GetType() == typeof(DroppedLoot))
-                {
-                    ;//how to give the item to the player. Had trouble getting Use() to give directly to the player
-                }
+                newItem = Instantiate(newItem, monster.transform.position, monster.transform.rotation) as Item;
             }
         }
 

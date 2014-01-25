@@ -31,12 +31,13 @@ namespace Assets.Code
         public Item ItemLootDrop()
         {
             Item newItem;
+            bool isdrop = true;
             int rarity = GetRarity(raritythresh);
             string raritystring = DropRarity(rarity);
             //if (raritystring != "nothing")
             //    return null;
             //else
-                newItem = lootTable.GetItem(raritystring);
+                newItem = lootTable.GetItem(raritystring, isdrop);
             return newItem;
         }
 
@@ -150,8 +151,9 @@ namespace Assets.Code
         {
             for (int x = 0; x <= slots; x++)
             {
+                bool isdrop = false;
                 Item newItem;
-                newItem = lootTable.GetItem(rarity);
+                newItem = lootTable.GetItem(rarity, isdrop);
                 newchest.AddItem(newItem);
             }
         }

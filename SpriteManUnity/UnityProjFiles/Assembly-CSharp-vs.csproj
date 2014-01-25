@@ -54,12 +54,15 @@
      <Compile Include="Assets\Code\ChestSpawner.cs" />
      <Compile Include="Assets\Code\Container.cs" />
      <Compile Include="Assets\Code\Director.cs" />
+     <Compile Include="Assets\Code\GUIStuff.cs" />
      <Compile Include="Assets\Code\Gun.cs" />
+     <Compile Include="Assets\Code\InteractByCollision.cs" />
      <Compile Include="Assets\Code\InteractByProximity.cs" />
      <Compile Include="Assets\Code\Items\DroppedLoot.cs" />
      <Compile Include="Assets\Code\Items\Item.cs" />
      <Compile Include="Assets\Code\Items\Key.cs" />
      <Compile Include="Assets\Code\Items\Resource.cs" />
+     <Compile Include="Assets\Code\Items\ResourceJetFuel.cs" />
      <Compile Include="Assets\Code\LootManager.cs" />
      <Compile Include="Assets\Code\LootTable.cs" />
      <Compile Include="Assets\Code\MasterManager.cs" />

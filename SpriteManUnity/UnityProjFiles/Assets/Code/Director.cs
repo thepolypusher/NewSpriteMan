@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace Assets.Code
 {
@@ -15,6 +16,7 @@ namespace Assets.Code
         private MasterManager _masterMan;
         public  int _spendingThreshhold;
         public bool _isBuyingStuff = false;
+        public float timer = 0;
 
         public void Awake()
         {
@@ -22,34 +24,38 @@ namespace Assets.Code
             //placeholder scale for maximum budget based on player level
             _maxBudget = _masterMan.PlayerMan.PlayerLevel * 1000;
             _currentBudget = _maxBudget / 4;
-            _spendingThreshhold = _currentBudget; //lets the Director spend right away
+            _spendingThreshhold = _currentBudget/4; //lets the Director spend right away
         }
 
         public void Update()
         {
+            timer += Time.deltaTime;
+            if (timer > 1)
+            {
+                _currentBudget += 1;
+                timer = 0;
+            }            
             if (!_isBuyingStuff && _currentBudget >= _spendingThreshhold)
             {
-                SpendCoins();
-                _isBuyingStuff = true;
+                StartCoroutine("SpendCoins");
             }
+
         }
 
-        private void SpendCoins()
+        private IEnumerator SpendCoins()
         {
-            while (_currentBudget >= 0)
+            _isBuyingStuff = true;
+            yield return new WaitForSeconds(DirectorPulse);
+            if (_currentBudget >= 0)
             {
-                float timer = Time.deltaTime;
                 var SpawnList = _masterMan.SceneMan.GetActiveSpawners();
                 //build a shopping list
                 //pick something off the list
                 int x = Random.Range(0, SpawnList.Count); //pick a random spawner to use
                 SpawnList[x].SpawnMonster(DirectorMonster);
                 _currentBudget -= DirectorMonster.Coins;
-                Debug.Log("Spwaning a Monster!");
-                while (timer < 1)
-                    return;
+                _isBuyingStuff = false;
             }
-            _isBuyingStuff = false;
         }
 
 

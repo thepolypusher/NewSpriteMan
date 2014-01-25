@@ -9,15 +9,19 @@ public class PlayerControl : MonoBehaviour
 	public float maxSpeed = 10f;
 	private bool facingRight = true;
 	public float jumpForce = 700f;
-    public float jetpackfuel = 4f,
-        maxjetpackfuel = 4f,
-        jetpackforce = 40f;
+    //public float jetpackfuel = 4f,
+    //    maxjetpackfuel = 4f,
+    //    jetpackforce = 40f;
+
+    //public int JetPackForce = 40;
+
     private bool stillholdingjump = true;
 
 	public Gun _gun;
 
 	Animator anim;
 
+    private PlayerManager _playerMan;
 	bool grounded = false;
 	public Transform groundCheck;
 	float groundRadius = 0.2f;
@@ -29,6 +33,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		anim = GetComponent<Animator>();
         SceneMan = FindObjectOfType<SceneManager>();
+        _playerMan = FindObjectOfType<PlayerManager>();
 	}
 	
 	void FixedUpdate () 
@@ -73,10 +78,10 @@ public class PlayerControl : MonoBehaviour
             stillholdingjump = false;         
         }
 
-        if (!grounded && holdjump && !stillholdingjump && jetpackfuel > 0f)
+        if (!grounded && holdjump && !stillholdingjump && _playerMan._currentJetFuel > 0f)
         {
-            rigidbody2D.AddForce(new Vector2(0, jetpackforce));
-            jetpackfuel -= Time.deltaTime;
+            rigidbody2D.AddForce(new Vector2(0, _playerMan.JetPackForce));
+            _playerMan._currentJetFuel -= Time.deltaTime;
         }
 
 

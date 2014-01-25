@@ -15,6 +15,10 @@ namespace Assets.Code
         public int PlayerHealth,
             PlayerMoney;
 
+        public float MaxJetfuel;
+        public float _currentJetFuel;
+        public int JetPackForce = 40;
+
         public int _xp;
 
         void Awake()

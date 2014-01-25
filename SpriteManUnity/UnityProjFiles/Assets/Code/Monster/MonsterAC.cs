@@ -39,7 +39,6 @@ namespace Assets.Code
             if (gameObject.tag == "Untagged") //maintenance to make sure I get set up as an enemy
                 gameObject.tag = "Enemy";
             target = FindObjectOfType<Player>().transform;
-
         }
 
         public void FixedUpdate()
@@ -54,8 +53,6 @@ namespace Assets.Code
             {
                 MainAttack();
             }
-
-
         }
 
         public void Init(int monsterlevel)

@@ -6,6 +6,7 @@ public abstract class Item : MonoBehaviour
     public string itemName;
     public int ItemID;
     public string ItemType;
+    public string ItemRarity;
 
     //public abstract void Init();
 
