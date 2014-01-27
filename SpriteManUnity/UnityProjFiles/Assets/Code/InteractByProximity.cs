@@ -4,11 +4,11 @@ using System.Collections;
 public class InteractByProximity : MonoBehaviour {
 
     public bool PlayerCanInteract;
-    private Item usableItem;
+    private Item _usableItem;
 
     void Start()
     {
-        usableItem = GetComponent<Item>();
+        _usableItem = GetComponent<Item>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -33,7 +33,8 @@ public class InteractByProximity : MonoBehaviour {
     {
         if (PlayerCanInteract)
         {
-            usableItem.Use();
+            print("Player using by proximity");
+            _usableItem.Use();
             PlayerCanInteract = false;
         }
     }

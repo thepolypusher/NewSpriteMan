@@ -19,11 +19,11 @@ namespace Assets.Code
         public void Awake()
         {
             //debug adding some item stubs as a loot table
-            //junkTable.Add(resourceStub);
-            //commonTable.Add(resourceStub);
-            //uncommonTable.Add(resourceStub);
-            //rareTable.Add(resourceStub);
-            //legendaryTable.Add(resourceStub);
+            junkTable.Add(resourceStub);
+            commonTable.Add(resourceStub);
+            uncommonTable.Add(resourceStub);
+            rareTable.Add(resourceStub);
+            legendaryTable.Add(resourceStub);
         }
 
         public Item GetItem(string rarity, bool isDrop)

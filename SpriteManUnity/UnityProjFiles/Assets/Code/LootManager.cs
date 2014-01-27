@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 namespace Assets.Code
 {
@@ -23,6 +24,7 @@ namespace Assets.Code
             int newChestSlots = GetChestSlots(newChestSize);
             bool isIdentified = ChestIsIdentified();
             var newChest = Instantiate(chestPrefab, spawner.transform.position, spawner.transform.rotation) as Chest;
+            Debug.Assert(newChest != null, "newChest != null");
             newChest.Init(newChestSize, newChestRarity, isIdentified, spawner);
             FillChest(lootTable, newChest, newChestSlots, newChestRarity);
             return newChest;

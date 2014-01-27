@@ -23,7 +23,7 @@ namespace Assets.Code
             
             public void Awake()
             {
-
+                print("Chest created");
             }
 
             public void Init(string size, string chestRarity, bool identified, ChestSpawner spawner)
@@ -116,6 +116,7 @@ namespace Assets.Code
                 {
                     masterMan.BaseMan.PlayerVault.AddItem(this);
                     gameObject.transform.position = masterMan.transform.position;
+                    print("moving chest");
                 }
                 ///Triggered if player is in the vault and the chest is not locked
                 else if (!locked)
@@ -130,6 +131,7 @@ namespace Assets.Code
                 }
                 else if (locked)
                 {
+                    print("Chest Locked Sucka");
                     //prompt user to either ID or Unlock the chest
                     //alternatively, IDing should occur automatically by the computer, so
                     //the only action necessary here is to Unlock the chest if the key is owned

@@ -30,7 +30,7 @@ namespace Assets.Code
         public void Update()
         {
             timer += Time.deltaTime;
-            if (timer > 1)
+            if (timer > 2)
             {
                 _currentBudget += 1;
                 timer = 0;
@@ -54,8 +54,8 @@ namespace Assets.Code
                 int x = Random.Range(0, SpawnList.Count); //pick a random spawner to use
                 SpawnList[x].SpawnMonster(DirectorMonster);
                 _currentBudget -= DirectorMonster.Coins;
-                _isBuyingStuff = false;
             }
+            _isBuyingStuff = false;
         }
 
 

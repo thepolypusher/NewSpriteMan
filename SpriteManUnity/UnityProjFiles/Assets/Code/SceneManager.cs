@@ -41,7 +41,10 @@ namespace Assets.Code
             
             InteractByProximity[] intobjs = FindObjectsOfType<InteractByProximity>();
             foreach (InteractByProximity intobj in intobjs)
+            {
                 SceneInteractiveObjects.Add(intobj);
+                print("adding " + intobj + " to scene");
+            }
 
             player.transform.position = ActiveScene.PlayerStartPoint.position;
         }
