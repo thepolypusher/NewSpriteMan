@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace Assets.Code
@@ -9,7 +7,6 @@ namespace Assets.Code
         public class Chest : Item
         {
             public List<Item> goods;
-
             private string chestsize;
             public string rarity;
             public bool locked = true;
@@ -32,6 +29,7 @@ namespace Assets.Code
                 rarity = chestRarity;
                 IDed = identified;
                 mySpawner = spawner;
+                itemName = rarity + " " + chestsize + " chest";
 
                 // change the size of the sprite depending on chestsize value
                 // TODO when assets are available, load different images
@@ -54,6 +52,7 @@ namespace Assets.Code
                 switch (rarity)
                 {
                     case "common": gameObject.GetComponent<SpriteRenderer>().sprite = CommonSprite;
+                        locked = false;
                         break;
                     case "uncommon": gameObject.GetComponent<SpriteRenderer>().sprite = UncommonSprite;
                         break;
@@ -76,10 +75,10 @@ namespace Assets.Code
                 IDed = ided;
             }
 
-            public void unlock()
-            {
-                locked = false;
-            }
+            //public void unlock()
+            //{
+            //    locked = false;
+            //}
 
             public void ShowItems()
             {
@@ -124,14 +123,27 @@ namespace Assets.Code
                     foreach (Item item in goods)
                     {
                         if (item != null)
-                            TransferItem(item, masterMan.PlayerMan.Playerinv);
-                        print("transferring items");
+                            if (item is Resource)
+                            {
+                                item.Use();
+                            }
+                            else
+                                TransferItem(item, masterMan.PlayerMan.Playerinv);
+                                print("transferring items");
                     }
                     Destroy(gameObject);
                 }
                 else if (locked)
                 {
-                    print("Chest Locked Sucka");
+                    int rarityint = (int)Enum.Parse(typeof(BaseKeys), rarity);
+                    if (masterMan.BaseMan.BaseKeys[rarityint] > 0)
+                    {
+                        masterMan.BaseMan.BaseKeys[rarityint] -= 1;
+                        locked = false;
+                        Use();
+                    }
+                    else
+                        print("Chest Locked Sucka");
                     //prompt user to either ID or Unlock the chest
                     //alternatively, IDing should occur automatically by the computer, so
                     //the only action necessary here is to Unlock the chest if the key is owned

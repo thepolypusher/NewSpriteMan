@@ -17,6 +17,7 @@ namespace Assets.Code
         public  int _spendingThreshhold;
         public bool _isBuyingStuff = false;
         public float timer = 0;
+        private bool _directorDefeated = false;
 
         public void Awake()
         {
@@ -29,18 +30,21 @@ namespace Assets.Code
 
         public void Update()
         {
-            timer += Time.deltaTime;
-            if (timer > 2)
+            if (!_directorDefeated)
             {
-                _currentBudget += 1;
-                timer = 0;
-            }            
-            if (!_isBuyingStuff && _currentBudget >= _spendingThreshhold)
-            {
-                StartCoroutine("SpendCoins");
+                timer += Time.deltaTime;
+                if (timer > 2)
+                {
+                    _currentBudget += 1;
+                    timer = 0;
+                }
+                if (!_isBuyingStuff && _currentBudget >= _spendingThreshhold)
+                {
+                    StartCoroutine("SpendCoins");
+                }
             }
-
         }
+            
 
         private IEnumerator SpendCoins()
         {

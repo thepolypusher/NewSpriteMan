@@ -5,9 +5,9 @@ namespace Assets.Code
 {
     public class LootTable : MonoBehaviour
     {
-        public Item resourceStub; // just some debug items to work with the loot tables
-        public Item gunStub;
-        public Item keyStub;
+        //public Item resourceStub; // just some debug items to work with the loot tables
+        //public Item gunStub;
+        //public Item keyStub;
 
         public List<Item> junkTable = new List<Item>();
         public List<Item> commonTable = new List<Item>();
@@ -19,11 +19,11 @@ namespace Assets.Code
         public void Awake()
         {
             //debug adding some item stubs as a loot table
-            junkTable.Add(resourceStub);
-            commonTable.Add(resourceStub);
-            uncommonTable.Add(resourceStub);
-            rareTable.Add(resourceStub);
-            legendaryTable.Add(resourceStub);
+            //junkTable.Add(resourceStub);
+            //commonTable.Add(resourceStub);
+            //uncommonTable.Add(resourceStub);
+            //rareTable.Add(resourceStub);
+            //legendaryTable.Add(resourceStub);
         }
 
         public Item GetItem(string rarity, bool isDrop)
@@ -62,13 +62,13 @@ namespace Assets.Code
             int x = UnityEngine.Random.Range(0, table.Count);
             newItem = table[x];
             return newItem;
-
         }
         private Item GetItemFromDropTable(string rarity)
         {
             Item newItem;
             int x = UnityEngine.Random.Range(0, dropTable.Count);
-            newItem = dropTable[0];
+            //print("GetItemFromDropTable random number is " + x);
+            newItem = dropTable[x];
             return newItem;
         }
         

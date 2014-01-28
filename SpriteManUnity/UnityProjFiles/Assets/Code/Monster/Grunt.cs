@@ -13,7 +13,6 @@ namespace Assets.Code
 
         public void Update()
         {
-            //MainAttackGun.TryShoot(facingRight);
         }
 
     }

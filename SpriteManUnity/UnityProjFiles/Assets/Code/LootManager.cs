@@ -7,6 +7,8 @@ namespace Assets.Code
     public class LootManager : MonoBehaviour
     {
         private MasterManager _masterMan;
+        public BaseManager _baseMan;
+
         public Chest chestPrefab;
         public LootTable lootTable;
 
@@ -15,6 +17,7 @@ namespace Assets.Code
         private void Awake()
         {
             _masterMan = FindObjectOfType<MasterManager>();
+            _baseMan = _masterMan.BaseMan;
         }
 
         public Chest ConstructChest(ChestSpawner spawner)

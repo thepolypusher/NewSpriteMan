@@ -96,7 +96,7 @@ namespace Assets.Code
         {
             Health -= amount;
             if (Health <= 0)
-                Destroy(gameObject);
+                Die();
         }
 
         public int GetHealth()
@@ -104,9 +104,10 @@ namespace Assets.Code
             return Health;
         }
 
-        public void OnDestroy()
+        public void Die()
         {
             _masterMan.SceneMan.MonsterDied(this);
+            Destroy(gameObject);
         }
 
         public void Guard(Vector2 point)
